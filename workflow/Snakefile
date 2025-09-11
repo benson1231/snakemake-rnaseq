@@ -1,9 +1,11 @@
 configfile: "config/config.yaml"
 
 include: "rules/common.smk"
+include: "rules/ref.smk"
 include: "rules/trim.smk"
 include: "rules/quantification.smk"
 include: "rules/multiqc.smk"
+
 
 print("MULTIQC_REPORTS_DIR:", MULTIQC_REPORTS_DIR)
 print("SAMPLES:", SAMPLES)
@@ -21,8 +23,18 @@ rule all:
         f"{REFERENCES_DIR}/transcriptome.idx",
         f"{REFERENCES_DIR}/transcripts_to_genes.txt",
 
+        f"{REFERENCES_DIR}/Homo_sapiens.GRCh38.113.gtf.gz",
+
+        f"{REFERENCES_DIR}/transcript_annotations_113.csv",
+        f"{REFERENCES_DIR}/gene_annotations_113.csv",
+
         expand(f"{KALLISTO_QUANT_DIR}/{{sample}}/abundance.tsv", sample=SAMPLES),
         expand(f"{KALLISTO_QUANT_DIR}/{{sample}}/kallisto.log", sample=SAMPLES),
 
-        f"{MULTIQC_REPORTS_DIR}/multiqc_report.html"
+        f"{MULTIQC_REPORTS_DIR}/multiqc_report.html",
+
+        f"{RESULTS_DIR}/01_counts/raw_count.csv",
+        f"{RESULTS_DIR}/02_figures/Euclidean Distance.png",
+        f"{RESULTS_DIR}/02_figures/Top100 high-variance genes heatmap.png",
+        f"{RESULTS_DIR}/03_summary_table"
 

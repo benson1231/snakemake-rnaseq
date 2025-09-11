@@ -27,5 +27,7 @@ cond_counts = Counter(conditions)
 # 判斷差異分析方法
 if all(count >= 2 for count in cond_counts.values()):
     DIFF_EXPR_METHOD = "deseq2"
+    include: "deseq2.smk"
 else:
     DIFF_EXPR_METHOD = "edger"
+    include: "edger.smk"

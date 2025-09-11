@@ -1,20 +1,3 @@
-rule download_kb_ref:
-    output:
-        idx = f"{REFERENCES_DIR}/transcriptome.idx",
-        t2g = f"{REFERENCES_DIR}/transcripts_to_genes.txt"
-    params:
-        species = config.get("species", "human"), 
-    conda:
-        "../envs/main.yaml"
-    shell:
-        """
-        mkdir -p {REFERENCES_DIR}
-        kb ref -d {params.species} \
-            -i {output.idx} \
-            -g {output.t2g}
-        """
-
-
 rule run_kallisto:
     input:
         clean_fastq1 = f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz",
