@@ -1,2 +1,24 @@
-samples: config/samplesheet_test.csv
-comparison: config/comparison_test.csv
+### Directories
+# Docker container working directory.
+data_dir: "../.test/data"
+output_dir: "results"
+
+samplesheet: config/samplesheet.csv
+
+comparison: config/comparison.csv
+
+### Reference Files
+# Docker container working directory.
+ref_dir: "/refs"
+transcriptome_index: "/refs/transcriptome.idx"
+
+
+### Tools
+# Choose the analysis method based on replicate availability:
+# - Use "DESeq2" if replicates are available.
+# - Use "edgeR" if no replicates are available.
+method: "edgeR"
+
+### Threads
+# Number of CPU threads to use for processing.
+threads: 16
