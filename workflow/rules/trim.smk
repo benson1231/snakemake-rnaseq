@@ -30,15 +30,15 @@ rule run_fastqc:
         clean_fastq1 = f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz",
         clean_fastq2 = f"{CLEAN_READ_DIR}/{{sample}}_R2_clean.fastq.gz"
     output:
-        fastqc_report1 = f"{CLEAN_READ_DIR}/{{sample}}_R1_clean_fastqc.html",
-        fastqc_report2 = f"{CLEAN_READ_DIR}/{{sample}}_R2_clean_fastqc.html",
-        fastqc_log = f"{CLEAN_READ_DIR}/{{sample}}_fastqc.log"
+        fastqc_report1 = f"{FASTQC_REPORTS}/{{sample}}_R1_clean_fastqc.html",
+        fastqc_report2 = f"{FASTQC_REPORTS}/{{sample}}_R2_clean_fastqc.html",
+        fastqc_log = f"{FASTQC_REPORTS}/{{sample}}_fastqc.log"
     conda:
         "../envs/main.yaml"
     shell:
         """
-        mkdir -p {CLEAN_READ_DIR}
-        fastqc -o {CLEAN_READ_DIR} \
+        mkdir -p {FASTQC_REPORTS}
+        fastqc -o {FASTQC_REPORTS} \
         {input.clean_fastq1} {input.clean_fastq2} \
         2>&1 | tee {output.fastqc_log}
         """
