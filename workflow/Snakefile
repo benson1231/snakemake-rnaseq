@@ -5,5 +5,9 @@ include: "rules/trim.smk"
 
 rule all:
     input:
-        expand(f"{OUTPUT_DIR}/{{sample}}_R1.trim.fastq.gz", sample=SAMPLES),
-        expand(f"{OUTPUT_DIR}/{{sample}}_R2.trim.fastq.gz", sample=SAMPLES)
+        expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz", sample=SAMPLES),
+        expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz", sample=SAMPLES),
+
+        expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean_fastqc.html", sample=SAMPLES),
+        expand(f"{CLEAN_READ_DIR}/{{sample}}_R2_clean_fastqc.html", sample=SAMPLES),
+        expand(f"{CLEAN_READ_DIR}/{{sample}}_fastqc.log", sample=SAMPLES)

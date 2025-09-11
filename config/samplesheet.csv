@@ -1,5 +1,0 @@
-sample_number,sample_name,abbreviation_name,condition,color
-1,Fastq_file_prefix_1,A1,A,#84C1FF
-2,Fastq_file_prefix_2,A2,A,#2828FF
-3,Fastq_file_prefix_3,B1,B,#4A90E2
-4,Fastq_file_prefix_4,B2,B,#4A90E2
