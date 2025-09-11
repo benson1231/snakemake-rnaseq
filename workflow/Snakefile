@@ -2,12 +2,27 @@ configfile: "config/config.yaml"
 
 include: "rules/common.smk"
 include: "rules/trim.smk"
+include: "rules/quantification.smk"
+include: "rules/multiqc.smk"
+
+print("MULTIQC_REPORTS_DIR:", MULTIQC_REPORTS_DIR)
+print("SAMPLES:", SAMPLES)
+
 
 rule all:
     input:
         expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz", sample=SAMPLES),
-        expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz", sample=SAMPLES),
+        expand(f"{CLEAN_READ_DIR}/{{sample}}_R2_clean.fastq.gz", sample=SAMPLES),
 
         expand(f"{FASTQC_REPORTS}/{{sample}}_R1_clean_fastqc.html", sample=SAMPLES),
         expand(f"{FASTQC_REPORTS}/{{sample}}_R2_clean_fastqc.html", sample=SAMPLES),
-        expand(f"{FASTQC_REPORTS}/{{sample}}_fastqc.log", sample=SAMPLES)
+        expand(f"{FASTQC_REPORTS}/{{sample}}_fastqc.log", sample=SAMPLES),
+
+        f"{REFERENCES_DIR}/transcriptome.idx",
+        f"{REFERENCES_DIR}/transcripts_to_genes.txt",
+
+        expand(f"{KALLISTO_QUANT_DIR}/{{sample}}/abundance.tsv", sample=SAMPLES),
+        expand(f"{KALLISTO_QUANT_DIR}/{{sample}}/kallisto.log", sample=SAMPLES),
+
+        f"{MULTIQC_REPORTS_DIR}/multiqc_report.html"
+

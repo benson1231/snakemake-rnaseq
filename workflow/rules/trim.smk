@@ -1,7 +1,7 @@
 rule fastp:
     input:
-        r1 = f"{DATA_DIR}/{{sample}}_R1.fastq.gz",
-        r2 = f"{DATA_DIR}/{{sample}}_R2.fastq.gz"
+        r1 = f"{RAW_DATA_DIR}/{{sample}}_R1.fastq.gz",
+        r2 = f"{RAW_DATA_DIR}/{{sample}}_R2.fastq.gz"
     output:
         r1 = f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz",
         r2 = f"{CLEAN_READ_DIR}/{{sample}}_R2_clean.fastq.gz",
