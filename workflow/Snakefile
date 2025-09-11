@@ -8,6 +8,6 @@ rule all:
         expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz", sample=SAMPLES),
         expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz", sample=SAMPLES),
 
-        expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean_fastqc.html", sample=SAMPLES),
-        expand(f"{CLEAN_READ_DIR}/{{sample}}_R2_clean_fastqc.html", sample=SAMPLES),
-        expand(f"{CLEAN_READ_DIR}/{{sample}}_fastqc.log", sample=SAMPLES)
+        expand(f"{FASTQC_REPORTS}/{{sample}}_R1_clean_fastqc.html", sample=SAMPLES),
+        expand(f"{FASTQC_REPORTS}/{{sample}}_R2_clean_fastqc.html", sample=SAMPLES),
+        expand(f"{FASTQC_REPORTS}/{{sample}}_fastqc.log", sample=SAMPLES)
