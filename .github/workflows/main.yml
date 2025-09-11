@@ -21,13 +21,11 @@ jobs:
       - name: Run Snakemake dry-run
         run: |
           docker compose run --rm rnaseq snakemake -np \
-            --directory workflow \
             --configfile ../.test/config/config.yaml
 
       - name: Run Snakemake with test data
         run: |
           docker compose run --rm rnaseq snakemake --cores 2 \
-            --directory workflow \
             --use-conda --show-failed-logs \
             --configfile ../.test/config/config.yaml
 
