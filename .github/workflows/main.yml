@@ -9,28 +9,16 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    container:
+      image: benson1231/bioc-rnaseq:v2
+      options: --user root 
+    
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Docker Compose
-        run: |
-          docker compose version
-
       - name: Run Snakemake dry-run
         run: |
-          docker compose run --rm rnaseq snakemake -np \
-            --configfile ../.test/config/config.yaml
-
-      - name: Run Snakemake with test data
-        run: |
-          docker compose run --rm rnaseq snakemake --cores 2 \
-            --use-conda --show-failed-logs \
-            --configfile ../.test/config/config.yaml
-
-      - name: Upload test results as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: snakemake-test-results
-          path: .test/results
+          cd workflow
+          snakemake -np --configfile ../.test/config/config.yaml
