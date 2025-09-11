@@ -2,10 +2,9 @@ services:
   rnaseq:
     image: benson1231/bioc-rnaseq:v2
     container_name: rnaseq-pipeline
-    working_dir: /workspace/workflow
+    working_dir: /workspace/workflow/
     volumes:
       - ..:/workspace
-      - ${DATA_PATH}:/data
       - ${REFERENCE_PATH}:/refs
     stdin_open: true
     tty: true
