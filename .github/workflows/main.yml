@@ -9,23 +9,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    container:
+      image: benson1231/bioc-rnaseq:v2
+      options: --user root 
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Conda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          auto-update-conda: true
-          python-version: 3.11
-          auto-activate-base: true
-
-      - name: Install Snakemake
-        run: |
-          conda install -y -c conda-forge -c bioconda snakemake=8.8.0 pandas
-
-      - name: Run Snakemake dry-run (test config)
+      - name: Run Snakemake dry-run
         run: |
           cd workflow
           snakemake -np --configfile ../.test/config/config.yaml

@@ -1,7 +1,8 @@
-import pandas as pd
+import csv
 
 DATA_DIR = config["data_dir"]
 OUTPUT_DIR = config["output_dir"]
 
-SAMPLES_DF = pd.read_csv(config["samplesheet"])
-SAMPLES = list(SAMPLES_DF["sample_name"])
+with open(config["samplesheet"]) as f:
+    reader = csv.DictReader(f)
+    SAMPLES = [row["sample_name"] for row in reader]

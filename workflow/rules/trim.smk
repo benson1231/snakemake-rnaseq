@@ -10,6 +10,8 @@ rule fastp:
     threads: 4
     log:
         f"{OUTPUT_DIR}/{{sample}}.log"
+    conda:
+        "../envs/main.yaml"
     shell:
         """
         fastp \
