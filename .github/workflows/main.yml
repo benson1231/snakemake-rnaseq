@@ -14,18 +14,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Conda environment
+      - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
-          activate-environment: snakemake-env
           python-version: 3.11
-          environment-file: workflow/envs/main.yaml
-          auto-activate-base: false
+          auto-activate-base: true
 
       - name: Install Snakemake
         run: |
-          conda install -c bioconda -c conda-forge snakemake==8.8.0 pandas
+          conda install -y -c conda-forge -c bioconda snakemake=8.8.0 pandas
 
       - name: Run Snakemake dry-run (test config)
         run: |
