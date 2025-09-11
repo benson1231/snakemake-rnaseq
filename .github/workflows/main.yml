@@ -1,0 +1,45 @@
+name: CI for Snakemake RNA-seq
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Conda environment
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          activate-environment: snakemake-env
+          python-version: 3.11
+          environment-file: workflow/envs/main.yaml
+          auto-activate-base: false
+
+      - name: Install Snakemake
+        run: |
+          conda install -c bioconda -c conda-forge snakemake==8.8.0 pandas
+
+      - name: Run Snakemake dry-run (test config)
+        run: |
+          cd workflow
+          snakemake -np --configfile ../.test/config/config.yaml
+
+      - name: Run Snakemake with test data
+        run: |
+          cd workflow
+          snakemake --cores 2 --use-conda --show-failed-logs \
+            --configfile ../.test/config/config.yaml
+
+      - name: Upload test results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: snakemake-test-results
+          path: .test/results

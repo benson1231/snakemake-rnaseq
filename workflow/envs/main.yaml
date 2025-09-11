@@ -1,0 +1,12 @@
+name: rnaseq-preprocess
+channels:
+  - defaults
+  - conda-forge
+  - bioconda
+channel_priority: strict
+
+dependencies:
+  - fastp=0.23.2
+  - fastqc=0.11.9
+  - kallisto=0.46.2   
+  - multiqc=1.13

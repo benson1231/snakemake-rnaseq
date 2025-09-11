@@ -1,0 +1,9 @@
+configfile: "config/config.yaml"
+
+include: "rules/common.smk"
+include: "rules/trim.smk"
+
+rule all:
+    input:
+        expand(f"{OUTPUT_DIR}/{{sample}}_R1.trim.fastq.gz", sample=SAMPLES),
+        expand(f"{OUTPUT_DIR}/{{sample}}_R2.trim.fastq.gz", sample=SAMPLES)
