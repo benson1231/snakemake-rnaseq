@@ -22,14 +22,14 @@ jobs:
         run: |
           docker compose run --rm rnaseq snakemake -np \
             --directory workflow \
-            --configfile .test/config/config.yaml
+            --configfile ../.test/config/config.yaml
 
       - name: Run Snakemake with test data
         run: |
           docker compose run --rm rnaseq snakemake --cores 2 \
             --directory workflow \
             --use-conda --show-failed-logs \
-            --configfile .test/config/config.yaml
+            --configfile ../.test/config/config.yaml
 
       - name: Upload test results as artifact
         uses: actions/upload-artifact@v4
