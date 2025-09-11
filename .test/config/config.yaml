@@ -1,0 +1,2 @@
+samples: config/samplesheet_test.csv
+comparison: config/comparison_test.csv

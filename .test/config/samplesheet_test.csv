@@ -1,0 +1,5 @@
+sample_number,sample_name,abbreviation_name,condition,color
+1,a.chr21.1.fq,A1,A,#84C1FF
+2,a.chr21.1.fq,A1,A,#84C1FF
+3,b.chr21.1.fq,B1,B,#2828FF
+4,b.chr21.1.fq,B1,B,#2828FF
