@@ -13,7 +13,6 @@ jobs:
       image: benson1231/bioc-rnaseq:v2
       options: --user root 
     
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,4 +20,12 @@ jobs:
       - name: Run Snakemake dry-run
         run: |
           cd workflow
-          snakemake -np --configfile ../.test/config/config.yaml
+          snakemake -np \
+            --configfile ../.test/config/config.yaml
+
+      - name: Run Snakemake with test data
+        run: |
+          cd workflow
+          snakemake --cores 2 \
+            --use-conda --show-failed-logs \
+            --configfile ../.test/config/config.yaml
