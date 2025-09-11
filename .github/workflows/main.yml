@@ -18,12 +18,12 @@ jobs:
         uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
-          python-version: 3.11
+          python-version: 3.12.2
           auto-activate-base: true
 
       - name: Install Snakemake
         run: |
-          conda install -y -c conda-forge -c bioconda snakemake=8.8.0 pandas
+          conda install -y -c conda-forge -c bioconda snakemake=9.1.10 pandas
 
       - name: Run Snakemake dry-run (test config)
         run: |
