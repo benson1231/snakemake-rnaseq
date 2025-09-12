@@ -635,3 +635,5 @@ for (Comparison_group_num in seq_along(deg_table_list)) {
     flag <- flag + 1
   }
 }
+
+quit(status = 0, save = "no")
