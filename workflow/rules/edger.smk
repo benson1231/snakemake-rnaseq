@@ -14,5 +14,7 @@ rule run_edgeR_analysis:
     shell:
         """
         mkdir -p {RESULTS_DIR}
+        chmod -R 775 results
         Rscript scripts/edger.R {RESULTS_DIR} {REFERENCES_DIR} {params.samplesheet} {params.comparison} > {log} 2>&1
+        rm -f Rplots.pdf
         """

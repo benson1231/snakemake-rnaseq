@@ -2,5 +2,6 @@
 
 -under construction
 
-
+cd workflow/
+docker compose run --rm rnaseq
 snakemake --cores 16 --use-conda

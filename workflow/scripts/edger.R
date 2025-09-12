@@ -27,6 +27,11 @@ ref_path <- args[2]
 samplesheet_file <- args[3]
 comparison_file <- args[4]
 
+data_path
+ref_path
+samplesheet_file
+comparison_file
+getwd()
 
 # if testing --------------------------------------------------------------
 # data_path <- "/home/benson/git/snakemake-rnaseq/workflow/results"
@@ -46,17 +51,21 @@ gene_annotations_path <- file.path(ref_path, "gene_annotations_113.csv")
 
 # Create output directory if it doesn’t exist
 if (!dir.exists(output_path)) dir.create(output_path, recursive = TRUE)
-# Set working directory to the output folder
-setwd(output_path)
-message("Set working directory to: ", output_path)
 
 
 # add folders --------------------------------------------------------------
 folders <- c("01_counts", "02_figures", "03_summary_table", "04_pathway")
-for (folder in folders) {
-  dir.create(file.path(output_path, folder), recursive = TRUE, showWarnings = FALSE)
-}
 
+for (folder in folders) {
+  target_dir <- file.path(output_path, folder)
+  if (!dir.exists(target_dir)) {
+    dir.create(target_dir, recursive = TRUE)
+    message("新建資料夾: ", normalizePath(target_dir))
+  } else {
+    message("已存在: ", normalizePath(target_dir))
+  }
+}
+list.dirs(path = "results/05_results", recursive = FALSE)
 
 # load file ---------------------------------------------------------------
 # Read gene annotation file and extract gene_id and gene_name
@@ -111,7 +120,7 @@ info <- readr::read_csv(samplesheet_file)  %>%
   column_to_rownames("row_name")
 
 sample_info_ft <- flextable(info)  # Create flextable object
-save_as_image(sample_info_ft, "02_figures/Sample information.png")  # Save table as PNG
+save_as_image(sample_info_ft, file.path(output_path, "02_figures/Sample information.png"))  # Save table as PNG
 message("Sample metadata table saved as image: 'Sample information.png'")
 
 
@@ -141,18 +150,18 @@ comparisons <- readr::read_csv(comparison_file) %>%
 # Save comparison table as image for reports or tracking
 # ========================================
 comparisons_ft <- flextable(comparisons)
-save_as_image(comparisons_ft, "02_figures/Sample comparisons.png")
+save_as_image(comparisons_ft, file.path(output_path,"02_figures/Sample comparisons.png"))
 message("Sample comparisons table saved as image: 'Sample comparisons.png'")
 
 
 
 # Prepare Kallisto abundance file paths ----------------------------------
 # Construct file paths for each sample's abundance.tsv
-files <- file.path(data_path, "03_kallisto_quant", sample_info$sample_name, "abundance.tsv")
+files <- file.path("results","03_kallisto_quant", sample_info$sample_name, "abundance.tsv")
 names(files) <- sample_info$sample_name  # Name each file by sample
 message("Loaded Kallisto abundance paths for ", length(files), " samples.")
 
-
+print(files)
 
 # Import Kallisto quantification results ----------------------------------
 txi.kallisto <- tximport(
@@ -247,7 +256,7 @@ p <- df_plot %>%
   scale_fill_manual(values = c("Before" = "#FDB863", "After" = "#80B1D3"))
 
 print(p)
-ggsave("02_figures/boxplot_log2CPM.png", p, width = 10, height = 6)
+ggsave(file.path(output_path, "02_figures/boxplot_log2CPM.png"), p, width = 10, height = 6)
 message("Boxplot saved as 'boxplot_log2CPM.png'")
 
 # ========================================
@@ -374,7 +383,7 @@ for (comparison_name in names(annotated_results_list)) {
   setColWidths(wb, sheet = comparison_name, cols = 1:ncol(current_result), widths = "auto")
   
   output_file <- paste0("edger_result_", comparison_name, ".xlsx")
-  saveWorkbook(wb, file = file.path(output_dir, output_file), overwrite = TRUE)
+  saveWorkbook(wb, file = file.path(output_dir, "03_summary_table", output_file), overwrite = TRUE)
   
   message("Saved annotated edgeR result to: ", output_file)
 }
@@ -409,7 +418,7 @@ dist_matrix_mat <- as.matrix(dist_matrix)
 colors <- colorRampPalette(rev(brewer.pal(9, "Blues")))(255)
 
 # Save heatmap to PNG
-png("02_figures/Euclidean Distance.png", width = 800, height = 700, res = 100)
+png(file.path(output_path, "02_figures/Euclidean Distance.png"), width = 800, height = 700, res = 100)
 ComplexHeatmap::Heatmap(
   dist_matrix_mat,
   name = "Euclidean Distance",
@@ -454,7 +463,7 @@ tryCatch({
     theme(plot.title = element_text(hjust = 0.5)) +
     guides(color = guide_legend(override.aes = list(size = 5)))
 
-  ggsave("02_figures/PCA plot.png", width = 7, height = 7)
+  ggsave(file.path(output_path, "02_figures/PCA plot.png"), width = 7, height = 7)
 
 }, error = function(e) {
   warning("PCA could not be performed or plotted. Please check the gene count matrix and sample size.")
@@ -467,7 +476,7 @@ tryCatch({
 tryCatch({
   
   # Save MDS plot to PNG
-  png("02_figures/MDS plot.png", width = 800, height = 700, res = 100)
+  png(file.path(output_path, "02_figures/MDS plot.png"), width = 800, height = 700, res = 100)
   
   # Set plot margins and allow drawing outside the plot region
   par(mar = c(5, 4, 4, 6), xpd = NA)
@@ -520,7 +529,7 @@ mat_scale <- top100_count %>%
   t() %>% scale(scale = TRUE) %>% t() %>% as.matrix() %>% na.omit()
 
 # Save heatmap
-png("02_figures/Top100 high-variance genes heatmap.png", width = 800, height = 1500, res = 100)
+png(file.path(output_path, "02_figures/Top100 high-variance genes heatmap.png"), width = 800, height = 1500, res = 100)
 ComplexHeatmap::Heatmap(
   mat_scale,
   top_annotation = ha,
