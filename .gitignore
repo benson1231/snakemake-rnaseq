@@ -1,3 +1,4 @@
 results/
 references/
+data/
 .snakemake/

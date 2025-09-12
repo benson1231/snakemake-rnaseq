@@ -1,3 +1,5 @@
 sample_number,sample_name,abbreviation_name,condition,color
-1,a.chr21,A,A,#84C1FF
-2,b.chr21,B,B,#2828FF
+1,NC_22LWVNLT4,NC,NC,grey40
+2,Bis-25-uM_22LWVNLT4,DEHP,DEHP,#4A90E2
+3,NNK-10-uM_22LWVNLT4,NNK,NNK,#2C3E50
+4,BaP-1-uM_22LWVNLT4,BaP,BaP,#A8CFCF

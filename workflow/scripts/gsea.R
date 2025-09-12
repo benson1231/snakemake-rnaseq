@@ -38,7 +38,6 @@ comparison_file <- args[2]
 # data_path <- "/home/benson/project/RNAseq/test_edgeR"
 
 
-
 # file path ---------------------------------------------------------------
 output_path <- data_path
 
@@ -229,7 +228,7 @@ for (Comparison_group_num in seq_along(deg_table_list)) {
   Comparison_group <- comparisons$Comparison[Comparison_group_num]
   
   # GSEA in GO --------------------------------------------------------------------
-  if (!dir.exists(file.path(output_path, "04_pathway",Comparison_group, "GSEA"))) dir.create(file.path(output_path, "04_pathway",Comparison_group, "GSEA"))
+  if (!dir.exists(file.path(output_path, "04_pathway",Comparison_group, "GSEA"))) dir.create(file.path(output_path, "04_pathway",Comparison_group, "GSEA"), recursive = TRUE)
   
   organism_for_GSEA <- "org.Hs.eg.db"
   
@@ -296,7 +295,7 @@ for (Comparison_group_num in seq_along(deg_table_list)) {
   })
 
   # GSEA in KEGG --------------------------------------------------------------------
-  if (!dir.exists(file.path(output_path, "04_pathway",Comparison_group, "KEGG"))) dir.create(file.path(output_path, "04_pathway",Comparison_group, "KEGG"))
+  if (!dir.exists(file.path(output_path, "04_pathway",Comparison_group, "KEGG"))) dir.create(file.path(output_path, "04_pathway",Comparison_group, "KEGG"), recursive = TRUE)
 
   organism_for_KEGG <- "hsa"
 
@@ -322,7 +321,7 @@ for (Comparison_group_num in seq_along(deg_table_list)) {
                  pAdjustMethod = "none",
                  keyType       = "ncbi-geneid")
 
-  saveRDS(keg, file.path(output_path, "04_pathway",Comparison_group, "KEGG/KEGG.rds"))
+  saveRDS(keg, file.path(output_path, "04_pathway", Comparison_group, "KEGG/KEGG.rds"))
 
   # dotplot
   tryCatch({
@@ -384,33 +383,28 @@ for (Comparison_group_num in seq_along(deg_table_list)) {
   dir.create(kegg_outdir, recursive = TRUE, showWarnings = FALSE)
   dir.create(info_dir, recursive = TRUE, showWarnings = FALSE)
 
-  # 暫存目錄
-  tmpdir <- tempdir()
-
   for (kegg_pathway_id in keg@result$ID[1:kegg_path_num]) {
     tryCatch({
       flag <- flag + 1
       
-      # 切換到暫存目錄執行 Pathview
-      old_wd <- getwd()
-      setwd(tmpdir)
-      
+      # 直接在輸出資料夾執行 pathview
       pv.out <- pathview(
         gene.data   = keg@geneList,
         pathway.id  = kegg_pathway_id,
-        kegg.dir    = info_dir,
+        kegg.dir    = info_dir,        # KGML 會放在這裡
         species     = "hsa",
         kegg.native = TRUE,
         out.suffix  = paste0("No", flag)
       )
       
-      # 回到原本工作目錄
-      setwd(old_wd)
-      
-      # 移動輸出檔案
-      generated_files <- list.files(tmpdir, pattern = paste0(kegg_pathway_id, ".*"), full.names = TRUE)
-      file.copy(generated_files, kegg_outdir, overwrite = TRUE)
-      file.remove(generated_files)
+      # 把生成的圖檔移到 kegg_outdir
+      generated_files <- list.files(getwd(), pattern = paste0(kegg_pathway_id, ".*"), full.names = TRUE)
+      if (length(generated_files) > 0) {
+        file.copy(generated_files, kegg_outdir, overwrite = TRUE)
+        file.remove(generated_files)
+      } else {
+        message("No files generated for ", kegg_pathway_id)
+      }
       
       print(paste("Finished:", kegg_pathway_id))
     }, error = function(e) {
@@ -584,8 +578,7 @@ for (Comparison_group_num in seq_along(deg_table_list)) {
 
 
   # output ------------------------------------------------------------------
-  if (!dir.exists(file.path(output_path, "04_pathway",Comparison_group, "enrichment results"))) dir.create(file.path(output_path, "04_pathway",Comparison_group, "enrichment results"))
-  setwd(file.path(output_path,"04_pathway",Comparison_group, "enrichment results"))
+  if(!dir.exists(file.path(output_path, "04_pathway",Comparison_group, "enrichment_results"))) dir.create(file.path(output_path, "04_pathway",Comparison_group, "enrichment_results"), recursive = TRUE)
 
   wb <- createWorkbook()
 
@@ -609,7 +602,7 @@ for (Comparison_group_num in seq_along(deg_table_list)) {
     flag <- flag + 1
   }
 
-  saveWorkbook(wb, "enrichment_results_all_table.xlsx", overwrite = TRUE)
+  saveWorkbook(wb, file.path(output_path,"04_pathway",Comparison_group, "enrichment_results","enrichment_results_all_table.xlsx"), overwrite = TRUE)
   cat("Excel file saved as 'enrichment_results_all_table.xlsx' in\n", getwd(),"\n")
 
   set_flextable_defaults(
@@ -637,7 +630,7 @@ for (Comparison_group_num in seq_along(deg_table_list)) {
       theme_vanilla() %>%  
       autofit() 
 
-    save_as_image(ft, file.path(getwd(), paste0(result_details[flag], ".png")))
+    save_as_image(ft, file.path(output_path, "04_pathway",Comparison_group, "enrichment_results", paste0(result_details[flag], ".png")))
 
     flag <- flag + 1
   }
