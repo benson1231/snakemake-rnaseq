@@ -25,13 +25,13 @@ library(pathview)
 args <- commandArgs(trailingOnly = TRUE)
 
 # Ensure at least one argument is provided (data path)
-if (length(args) < 1) {
+if (length(args) < 2) {
   stop("Missing argument: Please provide the data path.")
 }
 
 # Assign data path
 data_path <- args[1]
-
+comparison_file <- args[2]
 
 
 # if testing --------------------------------------------------------------
@@ -40,15 +40,11 @@ data_path <- args[1]
 
 
 # file path ---------------------------------------------------------------
-output_path <- file.path(data_path, "05_results")
-metadata_file_name <- "RNAseq_metadata.xlsx"
+output_path <- data_path
+
 
 # Create output directory if it doesn't exist
 if (!dir.exists(output_path)) dir.create(output_path, recursive = TRUE)
-
-# Set working directory to output
-setwd(output_path)
-
 
 
 # Set default flextable style ---------------------------------------------
@@ -88,8 +84,8 @@ message("There are ", length(deg_table_list), " Comparison")
 print(names(deg_table_list))
 
 # Start capturing stdout
-if (!file.exists("03_summary_table/DEG_summary.txt")) file.create("03_summary_table/DEG_summary.txt")
-sink("03_summary_table/DEG_summary.txt", split = TRUE, append = TRUE)
+if (!file.exists(file.path(output_path, "03_summary_table/DEG_summary.txt"))) file.create(file.path(output_path, "03_summary_table/DEG_summary.txt"))
+sink(file.path(output_path, "03_summary_table/DEG_summary.txt"), split = TRUE, append = TRUE)
 
 # Iterate over each dataset in the list
 for (i in names(deg_table_list)) {
@@ -223,10 +219,7 @@ print(names(deg_table_list))
 
 ### Set
 # Read experimental comparisons from Excel --------------------------------
-comparisons <- readxl::read_xlsx(
-  path = file.path(data_path, metadata_file_name),
-  sheet = 2
-) %>% 
+comparisons <- readr::read_csv(comparison_file) %>% 
   dplyr::mutate(Comparison = paste0(Treatment, "_vs_", Control)) %>%  # Generate comparison names
   dplyr::select(c("Comparison", "Treatment", "Control"))
 
@@ -381,24 +374,49 @@ for (Comparison_group_num in seq_along(deg_table_list)) {
   # pathview ----------------------------------------------------------------
   if (!dir.exists(file.path(output_path, "04_pathway",Comparison_group, "KEGG/pathway/information"))) dir.create(file.path(output_path, "04_pathway",Comparison_group, "KEGG/pathway/information"), recursive = T)
 
-  # draw top 3 kegg pathway genes
-  setwd(file.path(output_path, "04_pathway",Comparison_group, "KEGG/pathway"))
+  # draw top 3 KEGG pathway genes
+  flag <- 0
+  kegg_path_num <- min(3, length(keg@result$ID))
 
-  flag <-  0
-  kegg_path_num <- 3
-  if (length(keg@result$ID) <= kegg_path_num){
-    kegg_path_num <- length(keg@result$ID)
-  }
-  for (kegg_pathway_id in keg@result$ID[1:kegg_path_num]){
+  # 定義輸出資料夾
+  kegg_outdir <- file.path(output_path, "04_pathway", Comparison_group, "KEGG/pathway")
+  info_dir    <- file.path(kegg_outdir, "information")
+  dir.create(kegg_outdir, recursive = TRUE, showWarnings = FALSE)
+  dir.create(info_dir, recursive = TRUE, showWarnings = FALSE)
+
+  # 暫存目錄
+  tmpdir <- tempdir()
+
+  for (kegg_pathway_id in keg@result$ID[1:kegg_path_num]) {
     tryCatch({
-      flag = flag + 1
-      pathview(gene.data = keg@geneList, pathway.id = kegg_pathway_id, kegg.dir = file.path(output_path, "04_pathway",Comparison_group, "KEGG/pathway/information"),
-               species = "hsa", kegg.native = T, out.suffix = paste0("No",flag))
-      print(kegg_pathway_id)
-    }, error = function(e) cat(" -> ERROR: pathview failed for", kegg_pathway_id, "\n"))
+      flag <- flag + 1
+      
+      # 切換到暫存目錄執行 Pathview
+      old_wd <- getwd()
+      setwd(tmpdir)
+      
+      pv.out <- pathview(
+        gene.data   = keg@geneList,
+        pathway.id  = kegg_pathway_id,
+        kegg.dir    = info_dir,
+        species     = "hsa",
+        kegg.native = TRUE,
+        out.suffix  = paste0("No", flag)
+      )
+      
+      # 回到原本工作目錄
+      setwd(old_wd)
+      
+      # 移動輸出檔案
+      generated_files <- list.files(tmpdir, pattern = paste0(kegg_pathway_id, ".*"), full.names = TRUE)
+      file.copy(generated_files, kegg_outdir, overwrite = TRUE)
+      file.remove(generated_files)
+      
+      print(paste("Finished:", kegg_pathway_id))
+    }, error = function(e) {
+      cat(" -> ERROR: pathview failed for", kegg_pathway_id, "\n")
+    })
   }
-
-  setwd(output_path)
   # pathview(gene.data = keg@geneList, pathway.id = "hsa04066", kegg.dir =  file.path(output_path, "04_pathway",Comparison_group, "KEGG/pathway/information"),,
   #          species = "hsa", kegg.native = T)
 

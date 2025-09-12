@@ -383,7 +383,7 @@ for (comparison_name in names(annotated_results_list)) {
   setColWidths(wb, sheet = comparison_name, cols = 1:ncol(current_result), widths = "auto")
   
   output_file <- paste0("edger_result_", comparison_name, ".xlsx")
-  saveWorkbook(wb, file = file.path(output_dir, "03_summary_table", output_file), overwrite = TRUE)
+  saveWorkbook(wb, file = file.path(output_dir, output_file), overwrite = TRUE)
   
   message("Saved annotated edgeR result to: ", output_file)
 }
