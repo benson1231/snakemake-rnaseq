@@ -20,7 +20,6 @@ library(DOSE)
 library(pathview)
 
 
-
 # Read command-line arguments ---------------------------------------------
 args <- commandArgs(trailingOnly = TRUE)
 
