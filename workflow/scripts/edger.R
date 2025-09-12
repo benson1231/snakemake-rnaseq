@@ -47,6 +47,7 @@ gene_annotations_path <- file.path(ref_path, "gene_annotations_113.csv")
 # Create output directory if it doesn’t exist
 if (!dir.exists(output_path)) dir.create(output_path, recursive = TRUE)
 # Set working directory to the output folder
+setwd(output_path)
 message("Set working directory to: ", output_path)
 
 
