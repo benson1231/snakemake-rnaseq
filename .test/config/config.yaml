@@ -1,33 +1,20 @@
-### Directories
-# Docker container working directory.
-raw_data_dir: "../.test/test_data"
-output_dir: "results"
-clean_reads_dir: "results/01_clean_reads"
-fastqc_reports_dir: "results/02_fastqc_reports"
-kallisto_quant_dir: "results/03_kallisto_quant"        
-multiqc_reports_dir: "results/04_multiqc_reports"
-results_dir: "results/05_results"
+# These paths act as defaults in config.yaml but can be overridden dynamically via CLI with --config.
 
+# Directory containing raw FASTQ data.
+raw_data_dir: "../.test/test_data"
+
+# Root directory for analysis outputs.
+output_dir: "results"
+
+# Directory will contain transcriptome reference files download from this pipeline.
 references_dir: "references"
 
-samplesheet: ../.test/config/samplesheet.csv
-comparison: ../.test/config/comparison.csv
+# Path to the samplesheet (CSV file).
+# - Must include the following columns: sample_number,sample_name,abbreviation_name,condition,color
+# - The pipeline uses this file to determine which samples to process and the corresponding FASTQ file locations.
+samplesheet: "../.test/config/samplesheet.csv"
 
-
-
-
-### Reference Files
-# Docker container working directory.
-ref_dir: "/refs"
-transcriptome_index: "/refs/transcriptome.idx"
-
-
-### Tools
-# Choose the analysis method based on replicate availability:
-# - Use "DESeq2" if replicates are available.
-# - Use "edgeR" if no replicates are available.
-method: "edgeR"
-
-### Threads
-# Number of CPU threads to use for processing.
-threads: 16
+# Path to the comparison file (CSV file).
+# - Must include the following columns: Number,Treatment,Control
+# - The pipeline will generate differential analysis results based on this configuration.
+comparison: "../.test/config/comparison.csv"
