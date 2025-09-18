@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.1...v1.0.2) (2025-09-18)
+
+
+### Bug Fixes
+
+* first patch ([cb914a5](https://github.com/benson1231/snakemake-rnaseq/commit/cb914a594bf40c088cdd1c380b4759792d4af976))
+* new patch ([160c160](https://github.com/benson1231/snakemake-rnaseq/commit/160c1600a4f2eb141b464d6176c3c2eb110d8941))
+
 ## [1.0.1](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.0...v1.0.1) (2025-09-18)
 
 
