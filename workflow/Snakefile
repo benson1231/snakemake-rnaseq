@@ -89,4 +89,3 @@ rule all:
         # run_deg_gsea_analysis
         f"{RESULTS_DIR}/.deg_gsea_done.flag",
     default_target: True
-
