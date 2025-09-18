@@ -13,10 +13,6 @@ This repository contains a reproducible RNA-seq analysis pipeline built with [Sn
 
 Clone the repository and enter the workflow directory:
 
-```bash
-cd workflow/
-```
-
 Run the container:
 
 ```bash
@@ -26,7 +22,7 @@ docker compose run --rm rnaseq
 Execute the Snakemake pipeline with 16 cores and conda environments:
 
 ```bash
-snakemake --cores 16 --use-conda
+snakemake --cores 8 --use-conda --configfile ../.test/config/config.yaml
 ```
 
 ## Requirements
@@ -35,7 +31,7 @@ snakemake --cores 16 --use-conda
 * [Docker Compose](https://docs.docker.com/compose/)
 * [Snakemake ≥ 9.1.10](https://snakemake.github.io)
 
-## Status
-
-* ✅ GitHub Actions CI for testing
-* 🚧 Pipeline under active development
+# test
+```bash
+snakemake --cores 16 --use-conda --config raw_data_dir="../.test/test_data" samplesheet="../.test/config/samplesheet.csv" comparison="../.test/config/comparison.csv"
+```

@@ -4,8 +4,7 @@ services:
     container_name: rnaseq-pipeline
     working_dir: /workspace/workflow/
     volumes:
-      - ..:/workspace
-      - ${REFERENCE_PATH}:/refs
+      - .:/workspace
     stdin_open: true
     tty: true
     entrypoint: ["bash"]

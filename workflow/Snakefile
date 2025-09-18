@@ -1,5 +1,33 @@
+from snakemake.utils import min_version
+
+##### set minimum snakemake version #####
+# Ensure that the workflow only runs with the expected Snakemake version or higher.
+min_version("8.8.0")
+
+
+##### setup config #####
+# Define the main configuration file.
 configfile: "config/config.yaml"
 
+
+##### setup directories from config #####
+# Load directory paths and references from config.yaml,
+# allowing CLI --config to override them.
+RAW_DATA_DIR        = config.get("raw_data_dir", "data")
+OUTPUT_DIR          = config.get("output_dir", "results")
+REFERENCES_DIR      = config.get("references_dir", "references")
+
+
+# Define result output
+CLEAN_READ_DIR      = f"{OUTPUT_DIR}/01_clean_reads"
+FASTQC_REPORTS      = f"{OUTPUT_DIR}/02_fastqc_reports"
+KALLISTO_QUANT_DIR  = f"{OUTPUT_DIR}/03_kallisto_quant"
+MULTIQC_REPORTS_DIR = f"{OUTPUT_DIR}/04_multiqc_reports"
+RESULTS_DIR         = f"{OUTPUT_DIR}/05_results"
+
+
+##### load rules #####
+# Modularize the workflow by including rule files for each stage.
 include: "rules/common.smk"
 include: "rules/ref.smk"
 include: "rules/trim.smk"
@@ -8,36 +36,44 @@ include: "rules/multiqc.smk"
 include: "rules/gsea.smk"
 
 
-print("MULTIQC_REPORTS_DIR:", MULTIQC_REPORTS_DIR)
-print("SAMPLES:", SAMPLES)
-
-
+##### target rules #####
+# The final outputs of the workflow, collected in a single rule.
+# This ensures all intermediate rules run as dependencies.
 rule all:
     input:
+        # fastp
         expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz", sample=SAMPLES),
         expand(f"{CLEAN_READ_DIR}/{{sample}}_R2_clean.fastq.gz", sample=SAMPLES),
 
+        # run_fastqc
         expand(f"{FASTQC_REPORTS}/{{sample}}_R1_clean_fastqc.html", sample=SAMPLES),
         expand(f"{FASTQC_REPORTS}/{{sample}}_R2_clean_fastqc.html", sample=SAMPLES),
         expand(f"{FASTQC_REPORTS}/{{sample}}_fastqc.log", sample=SAMPLES),
 
+        # download_kb_ref
         f"{REFERENCES_DIR}/transcriptome.idx",
         f"{REFERENCES_DIR}/transcripts_to_genes.txt",
 
+        # download_gtf
         f"{REFERENCES_DIR}/Homo_sapiens.GRCh38.113.gtf.gz",
 
+        # parse_gtf
         f"{REFERENCES_DIR}/transcript_annotations_113.csv",
         f"{REFERENCES_DIR}/gene_annotations_113.csv",
 
+        # run_kallisto
         expand(f"{KALLISTO_QUANT_DIR}/{{sample}}/abundance.tsv", sample=SAMPLES),
         expand(f"{KALLISTO_QUANT_DIR}/{{sample}}/kallisto.log", sample=SAMPLES),
 
+        # run_multiqc
         f"{MULTIQC_REPORTS_DIR}/multiqc_report.html",
 
+        # run_edgeR_analysis
         f"{RESULTS_DIR}/01_counts/raw_count.csv",
         f"{RESULTS_DIR}/02_figures/Euclidean Distance.png",
         f"{RESULTS_DIR}/02_figures/Top100 high-variance genes heatmap.png",
         f"{RESULTS_DIR}/03_summary_table",
 
+        # run_deg_gsea_analysis
         f"{RESULTS_DIR}/.deg_gsea_done.flag"
 
