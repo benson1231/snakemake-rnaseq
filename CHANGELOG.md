@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.4...v1.0.5) (2025-09-18)
+
+
+### Bug Fixes
+
+* add sample list checkout before pipeline running ([44dac45](https://github.com/benson1231/snakemake-rnaseq/commit/44dac45a3226db4f78afc6008e6ce255e646b53f))
+
 ## [1.0.4](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.3...v1.0.4) (2025-09-18)
 
 
