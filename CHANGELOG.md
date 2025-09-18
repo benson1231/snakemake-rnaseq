@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.2...v1.0.3) (2025-09-18)
+
+
+### Bug Fixes
+
+* add snakemake-workflow-template to generate token ([8503ce6](https://github.com/benson1231/snakemake-rnaseq/commit/8503ce604c90f12e430b4ba956d7d5cb3fd37fc7))
+* token ([c504b21](https://github.com/benson1231/snakemake-rnaseq/commit/c504b21857c6dc4e9ae01802e15f5a3bd78273c7))
+
 ## [1.0.2](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.1...v1.0.2) (2025-09-18)
 
 
