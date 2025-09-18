@@ -12,6 +12,7 @@ Run the test pipeline with testing config:
 
 
 ```bash
+docker compose run --rm rnaseq
 snakemake --cores 4 --use-conda --configfile ../.test/config/config.yaml
 ```
 

@@ -1,3 +1,4 @@
+##### Main entrypoint of the workflow.
 from snakemake.utils import min_version
 
 ##### set minimum snakemake version #####
@@ -34,6 +35,17 @@ include: "rules/trim.smk"
 include: "rules/quantification.smk"
 include: "rules/multiqc.smk"
 include: "rules/gsea.smk"
+
+
+##### optional messages, log and error handling #####
+onstart:
+    print("\n--- Analysis started ---\n")
+
+onsuccess:
+    print("\n--- Workflow finished! ---\n")
+
+onerror:
+    print("\n--- An error occurred! ---\n")
 
 
 ##### target rules #####
@@ -75,5 +87,6 @@ rule all:
         f"{RESULTS_DIR}/03_summary_table",
 
         # run_deg_gsea_analysis
-        f"{RESULTS_DIR}/.deg_gsea_done.flag"
+        f"{RESULTS_DIR}/.deg_gsea_done.flag",
+    default_target: True
 
