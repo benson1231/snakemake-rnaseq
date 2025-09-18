@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.3...v1.0.4) (2025-09-18)
+
+
+### Bug Fixes
+
+* use pre-build ([def5052](https://github.com/benson1231/snakemake-rnaseq/commit/def505263e9a1b94ee2c57c79f26cf5f81da2614))
+
 ## [1.0.3](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.2...v1.0.3) (2025-09-18)
 
 
