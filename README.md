@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/benson1231/snakemake-rnaseq/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/benson1231/snakemake-rnaseq/actions/workflows/main.yml)
 [![Snakemake](https://img.shields.io/badge/snakemake-≥9.1.10-brightgreen.svg)](https://snakemake.github.io)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
 ---
 
