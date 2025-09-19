@@ -1,8 +1,12 @@
 # snakemake-rnaseq
 
 [![Tests](https://github.com/benson1231/snakemake-rnaseq/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/benson1231/snakemake-rnaseq/actions/workflows/main.yml)
-[![Snakemake](https://img.shields.io/badge/snakemake-≥9.1.10-brightgreen.svg)](https://snakemake.github.io)
+![Made with Snakemake](https://img.shields.io/badge/Made%20with-Snakemake-brightgreen?logo=snakemake)
+![Docker](https://img.shields.io/badge/run%20in-docker-blue?logo=docker)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+[![GitHub release](https://img.shields.io/github/v/release/benson1231/snakemake-rnaseq)](https://github.com/benson1231/snakemake-rnaseq/releases)
+![Last Commit](https://img.shields.io/github/last-commit/benson1231/snakemake-rnaseq)
+[![License](https://img.shields.io/github/license/benson1231/snakemake-rnaseq)](./LICENSE)
 
 ---
 
