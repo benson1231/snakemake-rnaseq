@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.6](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.5...v1.0.6) (2025-09-22)
+
+
+### Bug Fixes
+
+* add snakemake report ([ffad507](https://github.com/benson1231/snakemake-rnaseq/commit/ffad50783092aaa927343a6d82d2575614f664f1))
+* move config out of workflow ([dddd9f7](https://github.com/benson1231/snakemake-rnaseq/commit/dddd9f73fbc3df5b513ffde0defbc1c5b558fbaf))
+
 ## [1.0.5](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.4...v1.0.5) (2025-09-18)
 
 
