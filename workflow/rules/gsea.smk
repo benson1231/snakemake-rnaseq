@@ -5,7 +5,7 @@ rule run_deg_gsea_analysis:
         flag = f"{RESULTS_DIR}/.deg_gsea_done.flag"
     params:
         r_script = "scripts/gsea.R",
-        comparison = config.get("comparison", "config/comparison.csv")
+        comparison = config["comparison"]
     log:
         f"{RESULTS_DIR}/run_deg_gsea_analysis.log"
     shell:

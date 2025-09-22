@@ -3,6 +3,14 @@ import csv
 from collections import Counter
 
 print("\n" + "="*60)
+print("🔧 Loaded configuration parameters")
+print("="*60)
+
+# Print all config parameters nicely
+for k, v in config.items():
+    print(f"{k:15} : {v}")
+    
+print("\n" + "="*60)
 print("🔍 Starting input file validation...")
 print("="*60 + "\n")
 

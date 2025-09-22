@@ -12,9 +12,13 @@ references_dir: "references"
 # Path to the samplesheet (CSV file).
 # - Must include the following columns: sample_number,sample_name,abbreviation_name,condition,color
 # - The pipeline uses this file to determine which samples to process and the corresponding FASTQ file locations.
-samplesheet: config/samplesheet.csv
+samplesheet: "../config/samplesheet.csv"
 
 # Path to the comparison file (CSV file).
 # - Must include the following columns: Number,Treatment,Control
 # - The pipeline will generate differential analysis results based on this configuration.
-comparison: config/comparison.csv
+comparison: "../config/comparison.csv"
+
+# Species name (e.g., "human", "mouse").
+# - Used to determine reference genome/transcriptome resources.
+species: "human"

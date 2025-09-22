@@ -8,7 +8,7 @@ min_version("8.8.0")
 
 ##### setup config #####
 # Define the main configuration file.
-configfile: "config/config.yaml"
+configfile: "../config/config.yaml"
 
 
 ##### setup directories from config #####
@@ -56,6 +56,7 @@ rule all:
         # fastp
         expand(f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz", sample=SAMPLES),
         expand(f"{CLEAN_READ_DIR}/{{sample}}_R2_clean.fastq.gz", sample=SAMPLES),
+        expand(f"{CLEAN_READ_DIR}/{{sample}}.fastp.html", sample=SAMPLES),
 
         # run_fastqc
         expand(f"{FASTQC_REPORTS}/{{sample}}_R1_clean_fastqc.html", sample=SAMPLES),

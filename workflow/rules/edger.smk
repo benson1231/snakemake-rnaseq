@@ -9,8 +9,8 @@ rule run_edgeR_analysis:
     log:
         f"{RESULTS_DIR}/run_edgeR_analysis.log"
     params:
-        samplesheet = config.get("samplesheet", "config/samplesheet.csv"),
-        comparison = config.get("comparison", "config/comparison.csv")
+        samplesheet = config["samplesheet"],
+        comparison = config["comparison"]
     shell:
         """
         mkdir -p {RESULTS_DIR}

@@ -3,7 +3,7 @@ rule download_kb_ref:
         idx = f"{REFERENCES_DIR}/transcriptome.idx",
         t2g = f"{REFERENCES_DIR}/transcripts_to_genes.txt"
     params:
-        species = config.get("species", "human"), 
+        species = config["species"]
     conda:
         "../envs/main.yaml"
     shell:
