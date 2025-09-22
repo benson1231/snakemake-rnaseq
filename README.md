@@ -14,14 +14,18 @@
 Run the test pipeline with testing config:
 
 ```bash
+# run the workflow
 docker compose run --rm rnaseq
-snakemake --cores 4 --use-conda --configfile ../.test/config/config.yaml --report report/report.html
+snakemake --cores 4 --use-conda --configfile ../.test/config/config.yaml
+
+# generate the report
+snakemake --configfile ../.test/config/config.yaml --report results/report.html
 ```
 
 Run the test pipeline by overriding config values via CLI:
 
 ```bash
-snakemake --cores 4 --use-conda --report report/report.html \
+snakemake --cores 4 --use-conda \
   --config raw_data_dir="../.test/test_data" \
           output_dir="results" \
           references_dir="references" \

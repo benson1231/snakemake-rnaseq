@@ -5,7 +5,13 @@ rule fastp:
     output:
         r1 = f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz",
         r2 = f"{CLEAN_READ_DIR}/{{sample}}_R2_clean.fastq.gz",
-        html = f"{CLEAN_READ_DIR}/{{sample}}.fastp.html",
+        html = report(
+            f"{CLEAN_READ_DIR}/{{sample}}.fastp.html",
+            caption="../report/fastp.rst",
+            category="QC",
+            subcategory="fastp",
+            labels={"sample": "{sample}.fastp.html"},
+        ),
         json = f"{CLEAN_READ_DIR}/{{sample}}.fastp.json"
     threads: 4
     log:
@@ -30,8 +36,20 @@ rule run_fastqc:
         clean_fastq1 = f"{CLEAN_READ_DIR}/{{sample}}_R1_clean.fastq.gz",
         clean_fastq2 = f"{CLEAN_READ_DIR}/{{sample}}_R2_clean.fastq.gz"
     output:
-        fastqc_report1 = f"{FASTQC_REPORTS}/{{sample}}_R1_clean_fastqc.html",
-        fastqc_report2 = f"{FASTQC_REPORTS}/{{sample}}_R2_clean_fastqc.html",
+        fastqc_report1 = report(
+            f"{FASTQC_REPORTS}/{{sample}}_R1_clean_fastqc.html",
+            caption="../report/fastqc.rst",
+            category="QC",
+            subcategory="fastqc",
+            labels={"sample": "{sample}_R1_clean_fastqc.html"},
+        ),
+        fastqc_report2 = report(
+            f"{FASTQC_REPORTS}/{{sample}}_R2_clean_fastqc.html",
+            caption="../report/fastqc.rst",
+            category="QC",
+            subcategory="fastqc",
+            labels={"sample": "{sample}_R2_clean_fastqc.html"},
+        ),
         fastqc_log = f"{FASTQC_REPORTS}/{{sample}}_fastqc.log"
     conda:
         "../envs/main.yaml"
