@@ -1,0 +1,36 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #2f3640;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.navbar-actions a {
+  font-size: 18px;
+  color: #ffffff;
+  text-decoration: none;
+  margin-left: 25px;
+}
+
+.navbar-actions a:hover {
+  text-decoration: underline;
+}

@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './styles/main.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Layout Components
+import Navbar from './UI/Navbar/Navbar';
+import Footer from './UI/Footer/Footer';
+import BackToTop from './UI/BackToTop/BackToTop';
+import Sidebar from './UI/Sidebar/Sidebar';
+import SampleInfo from './info/SampleInfo';
+import Workflow from './info/Workflow';
+import QcReport from './viewer/QcReport';
+import SampleCorrelation from './viewer/SampleCorrelation';
+import TopGenesGroupSlider from './viewer/TopGenesGroupSlider';
+import MAPlot from './viewer/MAPlot';
+import VolcanoPlot from './viewer/VolcanoPlot';
+import ToolVersion from './info/ToolVersion';
+import References from './info/References';
+import GSEAIntro from './info/GSEAIntro';
+import GSEAViewer from './viewer/GSEAViewer';
+import GSEAGOMultiViewer from './viewer/GSEAGO_MultiViewer';
 
+
+const App = () => {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <Navbar />
+      <Sidebar/>
 
-export default App
+      <div className="main-content">
+        <SampleInfo />
+        <Workflow />
+        <QcReport />
+        <SampleCorrelation />
+
+        <TopGenesGroupSlider />
+        <MAPlot/>
+        <VolcanoPlot />
+
+        <GSEAIntro />
+        <GSEAViewer />
+        <GSEAGOMultiViewer />
+
+        <ToolVersion />
+        <References />
+      </div>
+
+      <BackToTop />
+      <Footer />
+    </>
+  );
+};
+
+export default App;

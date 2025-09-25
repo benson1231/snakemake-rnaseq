@@ -1,0 +1,53 @@
+/* === 側邊欄樣式 === */
+.sidebar {
+  position: fixed;         /* 固定在畫面左邊 */
+  left: 0;
+  top: 60px;               /* 預留上方空間給 Navbar */
+  width: 220px;            /* 側邊欄寬度 */
+  height: 100vh;           /* 滿高 */
+  background-color: #2f3640; /* 背景深色 */
+  color: white;
+  padding: 10px;
+  overflow-y: auto;        /* 超出可滾動 */
+  transition: transform 0.3s ease;
+}
+
+/* === 選單項目樣式 === */
+.menu li a {
+  font-size: 16px;
+  padding: 5px;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+/* 滑鼠滑過時加底線 */
+.menu li a:hover {
+  text-decoration: underline;
+}
+
+/* === 響應式：當螢幕寬度小於 768px 時調整為直式導覽列 === */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    top: 60px;
+    left: 0;
+    position: relative;         /* 改為隨內容排列 */
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu li a {
+    font-size: 16px;
+    padding: 10px
+  }
+}

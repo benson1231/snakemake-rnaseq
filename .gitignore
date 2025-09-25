@@ -2,3 +2,5 @@ results/
 references/
 data/
 .snakemake/
+04_multiqc_reports/
+05_results/
