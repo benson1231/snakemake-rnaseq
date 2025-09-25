@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.6...v1.0.7) (2025-09-25)
+
+
+### Bug Fixes
+
+* add web ([e4c40c9](https://github.com/benson1231/snakemake-rnaseq/commit/e4c40c95ae76fbcf2f0abba1cbe03b0f67aaa9a6))
+
 ## [1.0.6](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.5...v1.0.6) (2025-09-22)
 
 
