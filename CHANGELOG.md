@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.8](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.7...v1.0.8) (2025-09-26)
+
+
+### Bug Fixes
+
+* add web docker ([db49c1e](https://github.com/benson1231/snakemake-rnaseq/commit/db49c1e5fb4d02f3c62f0653fcc0e49176c493e9))
+* assets ([aa2c91c](https://github.com/benson1231/snakemake-rnaseq/commit/aa2c91c14170f6bfc1e4bd962166b518697d615c))
+* generate js in pipeline ([ccc30d5](https://github.com/benson1231/snakemake-rnaseq/commit/ccc30d510d251bf7b6f0201442403195d80867df))
+
 ## [1.0.7](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.6...v1.0.7) (2025-09-25)
 
 
