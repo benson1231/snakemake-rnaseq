@@ -1,7 +1,7 @@
 // src/VolcanoGroupSlider.jsx
 import React, { useState, useEffect } from "react";
 import { images } from "../assets/images.js"; // ✅ 匯入靜態圖片資料
-import SingleImage from "../common/SingleImage";     // ✅ 單圖放大元件
+import SingleImage from "../common/SingleImage.jsx";     // ✅ 單圖放大元件
 
 const VolcanoPlot = () => {
   const [groupOptions, setGroupOptions] = useState([]);

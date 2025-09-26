@@ -1,4 +1,4 @@
-const ToolVersion = () => {
+const Tools = () => {
   return (
     <div className="block" id="tools">
       <h2>分析工具與版本</h2>
@@ -36,4 +36,4 @@ const ToolVersion = () => {
   );
 };
 
-export default ToolVersion;
+export default Tools;

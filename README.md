@@ -43,6 +43,44 @@ See [config/README.md](config/README.md) for detailed instructions on configurin
 
 ---
 
+## Web
+
+You can run the web interface directly with Docker, without installing Node.js or npm locally.
+
+
+#### Copy results to web/public
+
+Before starting the web server, copy the analysis results into the `web/public` directory.  
+(Modify `results` if your output folder name is different.)
+
+```bash
+cp -r ./workflow/results/04_multiqc_reports ./web/public/04_multiqc_reports
+cp -r ./workflow/results/05_results ./web/public/05_results
+```
+
+#### Generate file structure JSON
+
+Before launching the web server, generate the JSON file that describes the results directory structure:
+
+```bash
+python ./utils/generate_file_structure_json.py
+```
+
+#### Run with Docker
+
+```bash
+docker run -it --rm \
+  -p 5173:5173 \
+  -v $(pwd)/web:/app \
+  -w /app \
+  node:20-alpine \
+  sh -c "npm install && npm run dev -- --host"
+
+# 'Ctrl + C' to exit
+```
+
+---
+
 ## Requirements
 
 * [Docker](https://docs.docker.com/get-docker/)

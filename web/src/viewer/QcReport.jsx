@@ -1,5 +1,3 @@
-import './QcReport.css';
-
 const QcReport = () => {
     return (
         <div className="block" id="QC">

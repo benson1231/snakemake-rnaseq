@@ -8,7 +8,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-actions">
         <a href="#">Home</a>
-        <a href="https://github.com/benson1231" target="_blank" rel="noreferrer">Website</a>
+        <a href="https://github.com/benson1231/snakemake-rnaseq" target="_blank" rel="noreferrer">Website</a>
       </div>
     </div>
   );

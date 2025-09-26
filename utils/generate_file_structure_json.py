@@ -2,7 +2,7 @@ import os
 import json
 
 # 專案根目錄下的 public 圖片來源
-source_dir = "./workflow/results"
+source_dir = "./web/public"
 # 目標輸出資料夾（放在 src/assets/ 中供 React 使用）
 output_dir = "./web/src/assets"
 

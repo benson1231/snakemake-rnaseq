@@ -12,11 +12,19 @@ import SampleCorrelation from './viewer/SampleCorrelation';
 import TopGenesGroupSlider from './viewer/TopGenesGroupSlider';
 import MAPlot from './viewer/MAPlot';
 import VolcanoPlot from './viewer/VolcanoPlot';
-import ToolVersion from './info/ToolVersion';
+import Tools from './info/Tools';
 import References from './info/References';
 import GSEAIntro from './info/GSEAIntro';
-import GSEAViewer from './viewer/GSEAViewer';
+import GSEA_summary from './viewer/GSEA_summary';
 import GSEAGOMultiViewer from './viewer/GSEAGO_MultiViewer';
+import GSEAKEGGMultiViewer from './viewer/GSEAKEGGMultiViewer';
+import TopKEGGPathwaysViewer from './viewer/TopKEGGPathwaysViewer';
+import ORAIntro from './info/ORAIntro';
+import ORA_summary from './viewer/ORA_summary';
+import ORAGOViewer from './viewer/ORAGOViewer';
+import ORAKEGGViewer from './viewer/ORAKEGGViewer';
+import ORADOMultiViewer from './viewer/ORADOVIewer';
+import ORAReactomeViewer from './viewer/ORAReactomeViewer';
 
 
 const App = () => {
@@ -36,10 +44,19 @@ const App = () => {
         <VolcanoPlot />
 
         <GSEAIntro />
-        <GSEAViewer />
+        <GSEA_summary />
         <GSEAGOMultiViewer />
+        <GSEAKEGGMultiViewer />
+        <TopKEGGPathwaysViewer />
 
-        <ToolVersion />
+        <ORAIntro />
+        <ORA_summary />
+        <ORAGOViewer />
+        <ORAKEGGViewer />
+        <ORADOMultiViewer />
+        <ORAReactomeViewer />
+
+        <Tools />
         <References />
       </div>
 

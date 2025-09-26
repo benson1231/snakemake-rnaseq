@@ -1,5 +1,3 @@
-// src/components/sections/AnalysisWorkflow.jsx
-
 const Workflow = () => (
   <div className="viewer-block block" id="analysis-workflow">
     <h2>分析流程介紹</h2>
