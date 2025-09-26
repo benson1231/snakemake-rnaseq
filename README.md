@@ -20,6 +20,9 @@ snakemake --cores 4 --use-conda --configfile ../.test/config/config.yaml
 
 # generate the report
 snakemake --configfile ../.test/config/config.yaml --report results/report.html
+
+# exit the container
+exit
 ```
 
 Run the test pipeline by overriding config values via CLI:
@@ -56,14 +59,7 @@ Before starting the web server, copy the analysis results into the `web/public` 
 ```bash
 cp -r ./workflow/results/04_multiqc_reports ./web/public/04_multiqc_reports
 cp -r ./workflow/results/05_results ./web/public/05_results
-```
-
-#### Generate file structure JSON
-
-Before launching the web server, generate the JSON file that describes the results directory structure:
-
-```bash
-python ./utils/generate_file_structure_json.py
+cp ./workflow/results/05_results/images.js ./web/src/assets/images.js
 ```
 
 #### Run with Docker

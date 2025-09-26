@@ -35,6 +35,8 @@ include: "rules/trim.smk"
 include: "rules/quantification.smk"
 include: "rules/multiqc.smk"
 include: "rules/gsea.smk"
+include: "rules/js.smk"
+
 
 
 ##### optional messages, log and error handling #####
@@ -89,4 +91,7 @@ rule all:
 
         # run_deg_gsea_analysis
         f"{RESULTS_DIR}/.deg_gsea_done.flag",
+
+        # get_results_js
+        f"{RESULTS_DIR}/images.js"
     default_target: True
