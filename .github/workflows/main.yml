@@ -11,9 +11,21 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: benson1231/bioc-rnaseq:v2
-      options: --user root 
-    
+      options: --user root
+
     steps:
+      # Free up disk space (very important)
+      - name: Free disk space on runner
+        run: |
+          echo "Before cleanup:"
+          df -h
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/hostedtoolcache
+          sudo rm -rf /usr/share/dotnet
+          docker system prune -af || true
+          echo "After cleanup:"
+          df -h
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -21,6 +33,7 @@ jobs:
         run: |
           mkdir -p ~/.local/share/GOSemSim
 
+      # Snakemake dry run
       - name: Run Snakemake dry-run
         run: |
           cd workflow
@@ -31,5 +44,8 @@ jobs:
         run: |
           cd workflow
           snakemake --cores 2 \
-            --use-conda --show-failed-logs \
+            --use-conda \
+            --conda-prefix /tmp/snakemake-conda \
+            --conda-frontend mamba \
+            --show-failed-logs \
             --configfile ../.test/config/config.yaml
