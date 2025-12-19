@@ -1,4 +1,4 @@
-name: CI + Deploy to GitHub Pages
+name: GitHub actions status
 
 on:
   push:
@@ -7,96 +7,29 @@ on:
     branches: [ main ]
 
 jobs:
-
-  # ----------------------------------------------------
-  # 1. Snakemake CI with Docker
-  # ----------------------------------------------------
   test:
-    name: Snakemake Pipeline Test
     runs-on: ubuntu-latest
     container:
       image: benson1231/bioc-rnaseq:v2
-      options: --user root
+      options: --user root 
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Prepare GOSemSim cache directory
-        run: mkdir -p ~/.local/share/GOSemSim
+        run: |
+          mkdir -p ~/.local/share/GOSemSim
 
-      - name: Snakemake dry run
+      - name: Run Snakemake dry-run
         run: |
           cd workflow
-          snakemake -np --configfile ../.test/config/config.yaml
-
-      - name: Run Snakemake test pipeline
-        run: |
-          cd workflow
-          snakemake --cores 2 --use-conda \
-            --show-failed-logs \
+          snakemake -np \
             --configfile ../.test/config/config.yaml
 
-      - name: Copy results to web/public
+      - name: Run Snakemake with test data
         run: |
-          mkdir -p web/public
-          cp -r ./workflow/results/04_multiqc_reports ./web/public/04_multiqc_reports
-          cp -r ./workflow/results/05_results ./web/public/05_results
-          cp ./workflow/results/05_results/images.js ./web/src/assets/images.js
-
-      - name: Upload web build inputs
-        uses: actions/upload-artifact@v4
-        with:
-          name: web-input
-          path: web
-
-  # ----------------------------------------------------
-  # 2. Build web page using Node (outside container)
-  # ----------------------------------------------------
-  build:
-    name: Build Web UI
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download input
-        uses: actions/download-artifact@v4
-        with:
-          name: web-input
-          path: web
-
-      - name: Install Node & build
-        run: |
-          cd web
-          npm ci
-          npm run build
-
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: web/dist
-
-  # ----------------------------------------------------
-  # 3. Deploy to GitHub Pages
-  # ----------------------------------------------------
-  deploy:
-    name: Deploy to GitHub Pages
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-        
+          cd workflow
+          snakemake --cores 2 \
+            --use-conda --show-failed-logs \
+            --configfile ../.test/config/config.yaml
