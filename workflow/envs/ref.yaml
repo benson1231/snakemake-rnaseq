@@ -1,9 +1,9 @@
 name: r-gtf
 channels:
-  - conda-forg    # 全包
+  - conda-forge
 dependencies:
   - r-base=4.3
   - r-dplyr
   - bioconductor-annotationdbi
   - bioconductor-rtracklayer
-  - bioconductor-org.Hs.eg.db
+  - bioconductor-org.hs.eg.db
