@@ -82,3 +82,4 @@ docker run -it --rm \
 * [Docker](https://docs.docker.com/get-docker/)
 * [Docker Compose](https://docs.docker.com/compose/)
 * [Snakemake ≥ 9.1.10](https://snakemake.github.io)
+
