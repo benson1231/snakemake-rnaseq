@@ -1,7 +1,6 @@
 name: r-gtf
 channels:
-  - conda-forge
-  - bioc
+  - conda-forg    # 全包
 dependencies:
   - r-base=4.3
   - r-dplyr
