@@ -6,6 +6,6 @@ channels:
 dependencies:
   - r-base=4.3
   - r-dplyr
-  - bioconductor-rtracklayer=1.62.0
-  - bioconductor-annotationdbi=1.62.2
-  - bioconductor-org.hs.eg.db=3.17.0
+  - bioconductor-rtracklayer
+  - bioconductor-org.hs.eg.db
+  - bioconductor-annotationdbi

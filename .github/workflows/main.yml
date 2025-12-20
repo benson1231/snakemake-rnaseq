@@ -22,6 +22,15 @@ jobs:
           sudo rm -rf /usr/local/share/boost
           df -h
           
+      - name: Fix R tempdir permission
+        run: |
+          mkdir -p $HOME/Rtmp
+          chmod 777 $HOME/Rtmp
+          echo "TMPDIR=$HOME/Rtmp" >> $GITHUB_ENV
+          echo "TEMP=$HOME/Rtmp" >> $GITHUB_ENV
+          echo "TMP=$HOME/Rtmp" >> $GITHUB_ENV
+          echo "R_TEMP_DIR=$HOME/Rtmp" >> $GITHUB_ENV
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
