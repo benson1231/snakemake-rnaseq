@@ -8,4 +8,4 @@ dependencies:
   - r-dplyr
   - bioconductor-rtracklayer
   - bioconductor-org.hs.eg.db
-  - bioconductor-annotationdbi
+  - bioconductor-annotationdbi=3.17.0
