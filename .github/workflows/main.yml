@@ -9,37 +9,46 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    # 使用你自己的 Bioconductor-ready container → 保證 R 不用 conda 安裝
     container:
       image: benson1231/bioc-rnaseq:v2
-      options: --user root 
-    
+      options: --user root
+
     steps:
+
+      # ---------- Step 1: 釋放磁碟空間（最重要） ----------
       - name: Free disk space
         run: |
           sudo rm -rf /opt/hostedtoolcache
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /usr/local/share/boost
+          docker system prune -af --volumes || true
           df -h
-          
-      - name: Fix R tempdir permission
-        run: |
-          mkdir -p $HOME/Rtmp
-          chmod 777 $HOME/Rtmp
-          echo "TMPDIR=$HOME/Rtmp" >> $GITHUB_ENV
-          echo "TEMP=$HOME/Rtmp" >> $GITHUB_ENV
-          echo "TMP=$HOME/Rtmp" >> $GITHUB_ENV
-          echo "R_TEMP_DIR=$HOME/Rtmp" >> $GITHUB_ENV
 
+      # ---------- Step 2: 建立可用暫存資料夾（R / pip / conda 都會使用） ----------
+      - name: Fix tempdir permission
+        run: |
+          mkdir -p $HOME/tmp
+          chmod -R 777 $HOME/tmp
+          echo "TMPDIR=$HOME/tmp" >> $GITHUB_ENV
+          echo "TEMP=$HOME/tmp" >> $GITHUB_ENV
+          echo "TMP=$HOME/tmp" >> $GITHUB_ENV
+          echo "R_TEMP_DIR=$HOME/tmp" >> $GITHUB_ENV
+
+      # ---------- Step 3: 抓取 Repository ----------
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ---------- Step 4: Snakemake dry-run ----------
       - name: Run Snakemake dry-run
         run: |
           cd workflow
           snakemake -np \
             --configfile ../.test/config/config.yaml
 
+      # ---------- Step 5: 實際執行 Snakemake ----------
       - name: Run Snakemake with test data
         run: |
           cd workflow
