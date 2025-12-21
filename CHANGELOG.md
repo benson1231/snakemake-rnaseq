@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.1.0](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.8...v1.1.0) (2025-12-21)
+
+
+### Features
+
+* add test ([3fd376b](https://github.com/benson1231/snakemake-rnaseq/commit/3fd376bef54ea35cb30600c922fd48dc0f4df683))
+* add version info ([7662446](https://github.com/benson1231/snakemake-rnaseq/commit/7662446234a82257fa1bfb8515d045c0969650c8))
+* clean ([142542d](https://github.com/benson1231/snakemake-rnaseq/commit/142542d8e60e930b6f6929ca2169ffd549bcdf4f))
+* fix the bug ([d33d5be](https://github.com/benson1231/snakemake-rnaseq/commit/d33d5bea94e73308d2d48772d824eeb91db4e07d))
+* fix the bug ([6d6d72b](https://github.com/benson1231/snakemake-rnaseq/commit/6d6d72ba46adabfbeb6c8900f171cae749a488d3))
+* rollback ([8381f33](https://github.com/benson1231/snakemake-rnaseq/commit/8381f336990a9180097afc9c295b25cceab0f5a7))
+* update token ([8fc96b2](https://github.com/benson1231/snakemake-rnaseq/commit/8fc96b2c717da31049822d8130643fe127741d6e))
+* update token ([0f794f5](https://github.com/benson1231/snakemake-rnaseq/commit/0f794f51cd2c75d5fc21017eed09debe98eae369))
+
+
+### Bug Fixes
+
+* fix:  ([8da4cdf](https://github.com/benson1231/snakemake-rnaseq/commit/8da4cdf34f372ae2516e0d75f22d273edcc0138a))
+* fix:  ([59836d4](https://github.com/benson1231/snakemake-rnaseq/commit/59836d4be93ced389e325120f112f24c62fe6fb7))
+* add Rtmp ([2281a8b](https://github.com/benson1231/snakemake-rnaseq/commit/2281a8b4817b97b2b6546b4ae1cbe0e9b1a9755c))
+* fix the bug cache error ([8ee5d9e](https://github.com/benson1231/snakemake-rnaseq/commit/8ee5d9ec61e964e4061cd81b9602036db3eb8267))
+* free disk ([db75f51](https://github.com/benson1231/snakemake-rnaseq/commit/db75f519aaa299c65fe28213ee10d3dd423b94b2))
+* hs to Hs ([2551d78](https://github.com/benson1231/snakemake-rnaseq/commit/2551d7880eacc7a151dc35a7a0e5b539e44e7cfd))
+* test ([6e85a47](https://github.com/benson1231/snakemake-rnaseq/commit/6e85a477889bf68b8b7e041db937e3e8c7a2fc9e))
+* typo ([6274350](https://github.com/benson1231/snakemake-rnaseq/commit/62743509b88e89c60e162f06088093ebc3aa0a5a))
+
 ## [1.0.8](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.7...v1.0.8) (2025-09-26)
 
 
