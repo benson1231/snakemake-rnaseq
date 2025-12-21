@@ -17,6 +17,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Make init.sh executable
+        run: chmod +x init.sh
+
       - name: Download references data
         run: ./init.sh
 
