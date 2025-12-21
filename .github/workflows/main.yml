@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: benson1231/bioc-rnaseq:v2
-      options: --user root 
     
     steps:
       - name: Prepare GOSemSim cache directory
@@ -63,7 +62,7 @@ jobs:
           snakemake --cores 4 \
             --use-conda --show-failed-logs \
             --configfile ../.test/config/config.yaml
-            
+
       - name: Snakemake summary + Conda environment details
         run: |
           cd workflow
