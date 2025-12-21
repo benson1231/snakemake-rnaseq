@@ -14,6 +14,10 @@ jobs:
       options: --user root 
     
     steps:
+      - name: Prepare GOSemSim cache directory
+        run: |
+          mkdir -p ~/.local/share/GOSemSim
+          
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -29,13 +33,11 @@ jobs:
           restore-keys: |
             ref-v1-
 
-      - name: Make init.sh executable
-        if: steps.cache-ref.outputs.cache-hit != 'true'
-        run: chmod +x init.sh
-
       - name: Run init.sh to build references
         if: steps.cache-ref.outputs.cache-hit != 'true'
-        run: ./init.sh
+        run: |
+          chmod +x init.sh  
+          ./init.sh
 
       - name: Debug reference folder
         run: ls -lh workflow/reference || true
