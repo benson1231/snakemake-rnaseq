@@ -5,8 +5,8 @@ channels:
   - defaults
 dependencies:
   - r-base=4.3
-  - r-dplyr
-  - bioconductor-rtracklayer
-  - bioconductor-annotationhub
-  - bioconductor-ensembldb
-  - bioconductor-annotationdbi
+  - r-dplyr=1.1.4
+  - bioconductor-rtracklayer=1.62.0
+  - bioconductor-org.hs.eg.db=3.18.0
+  - kallisto=0.46.2
+  - gffread

@@ -17,6 +17,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Download references data
+        run: ./init.sh
+
       - name: Run Snakemake dry-run
         run: |
           cd workflow

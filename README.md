@@ -13,6 +13,13 @@
 
 Run the test pipeline with testing config:
 
+```
+./init.sh
+
+conda deactivate
+conda env remove -n r-gtf
+```
+
 ```bash
 # run the workflow
 docker compose run --rm rnaseq

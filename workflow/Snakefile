@@ -30,7 +30,6 @@ RESULTS_DIR         = f"{OUTPUT_DIR}/05_results"
 ##### load rules #####
 # Modularize the workflow by including rule files for each stage.
 include: "rules/common.smk"
-include: "rules/ref.smk"
 include: "rules/trim.smk"
 include: "rules/quantification.smk"
 include: "rules/multiqc.smk"
@@ -64,17 +63,6 @@ rule all:
         expand(f"{FASTQC_REPORTS}/{{sample}}_R1_clean_fastqc.html", sample=SAMPLES),
         expand(f"{FASTQC_REPORTS}/{{sample}}_R2_clean_fastqc.html", sample=SAMPLES),
         expand(f"{FASTQC_REPORTS}/{{sample}}_fastqc.log", sample=SAMPLES),
-
-        # download_kb_ref
-        f"{REFERENCES_DIR}/transcriptome.idx",
-        f"{REFERENCES_DIR}/transcripts_to_genes.txt",
-
-        # download_gtf
-        f"{REFERENCES_DIR}/Homo_sapiens.GRCh38.113.gtf.gz",
-
-        # parse_gtf
-        f"{REFERENCES_DIR}/transcript_annotations_113.csv",
-        f"{REFERENCES_DIR}/gene_annotations_113.csv",
 
         # run_kallisto
         expand(f"{KALLISTO_QUANT_DIR}/{{sample}}/abundance.tsv", sample=SAMPLES),
