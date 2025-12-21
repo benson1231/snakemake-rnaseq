@@ -44,3 +44,6 @@ wget -O "$FASTA_PATH" "$FASTA_URL"
 
 # Build kallisto index
 kallisto index -i workflow/references/transcriptome.idx <(zcat "$FASTA_PATH")
+
+rm "$FASTA_PATH"
+rm "$GTF_PATH"

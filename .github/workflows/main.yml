@@ -17,13 +17,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Cache reference
+        id: cache-ref
+        uses: actions/cache@v4
+        with:
+          path: |
+            workflow/reference/gene_annotations_113.csv
+            workflow/reference/transcript_annotations_113.csv
+            workflow/reference/transcriptome.idx
+          key: ref-v1-${{ hashFiles('init.sh') }}
+          restore-keys: |
+            ref-v1-
+
       - name: Make init.sh executable
+        if: steps.cache-ref.outputs.cache-hit != 'true'
         run: chmod +x init.sh
 
-      - name: Download references data
+      - name: Run init.sh to build references
+        if: steps.cache-ref.outputs.cache-hit != 'true'
         run: ./init.sh
 
-      - name: Run Snakemake dry-run
+      - name: Debug reference folder
+        run: ls -lh workflow/reference || true
+
+      - name: Snakemake dry-run
         run: |
           cd workflow
           snakemake -np \
