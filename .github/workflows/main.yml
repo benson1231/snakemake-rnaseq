@@ -17,7 +17,7 @@ jobs:
       - name: Prepare GOSemSim cache directory
         run: |
           mkdir -p ~/.local/share/GOSemSim
-          
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -26,9 +26,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            workflow/reference/gene_annotations_113.csv
-            workflow/reference/transcript_annotations_113.csv
-            workflow/reference/transcriptome.idx
+            workflow/references/gene_annotations_113.csv
+            workflow/references/transcript_annotations_113.csv
+            workflow/references/transcriptome.idx
           key: ref-v1-${{ hashFiles('init.sh') }}
           restore-keys: |
             ref-v1-
