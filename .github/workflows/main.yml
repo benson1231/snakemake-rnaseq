@@ -40,6 +40,17 @@ jobs:
       - name: Debug reference folder
         run: ls -lh workflow/reference || true
 
+      - name: Show system resources
+        run: |
+          echo "===== CPU and memory ====="
+          top -b -n 1 | head -n 20
+
+          echo "===== Memory ====="
+          free -h
+
+          echo "===== Disk usage ====="
+          df -h
+
       - name: Snakemake dry-run
         run: |
           cd workflow

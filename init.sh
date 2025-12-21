@@ -47,3 +47,12 @@ kallisto index -i workflow/references/transcriptome.idx <(zcat "$FASTA_PATH")
 
 rm "$FASTA_PATH"
 rm "$GTF_PATH"
+
+# ==========
+# Clean up conda env
+# ==========
+echo ">>> Cleaning up conda environment r-gtf"
+conda deactivate
+conda env remove -n r-gtf -y
+
+echo ">>> Done!"
