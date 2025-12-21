@@ -2,11 +2,11 @@ name: r-gtf
 channels:
   - conda-forge
   - bioconda
-  - defaults
+channel_priority: strict
 dependencies:
-  - r-base=4.3
-  - r-dplyr=1.1.4
-  - bioconductor-rtracklayer=1.62.0
-  - bioconductor-org.hs.eg.db=3.18.0
-  - kallisto=0.46.2
-  - gffread
+  - conda-forge::r-base=4.3
+  - conda-forge::r-dplyr=1.1.4
+  - bioconda::bioconductor-rtracklayer=1.62.0
+  - bioconda::bioconductor-org.hs.eg.db=3.18.0
+  - bioconda::kallisto=0.46.2
+  - bioconda::gffread=0.12.7
