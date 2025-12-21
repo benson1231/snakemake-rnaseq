@@ -39,17 +39,15 @@ jobs:
           chmod +x init.sh  
           ./init.sh
 
-      - name: Debug reference folder
-        run: ls -lh workflow/reference || true
+      - name: Debug references folder
+        run: ls -lh workflow/references || true
 
       - name: Show system resources
         run: |
           echo "===== CPU and memory ====="
           top -b -n 1 | head -n 20
-
           echo "===== Memory ====="
           free -h
-
           echo "===== Disk usage ====="
           df -h
 
@@ -65,3 +63,27 @@ jobs:
           snakemake --cores 4 \
             --use-conda --show-failed-logs \
             --configfile ../.test/config/config.yaml
+            
+      - name: Snakemake summary + Conda environment details
+        run: |
+          cd workflow
+
+          echo "===== Snakemake Version ====="
+          snakemake --version
+
+          echo
+          echo "===== Detailed Summary ====="
+          snakemake --detailed-summary --configfile ../.test/config/config.yaml
+
+          echo
+          echo "===== Conda Environments Used ====="
+          find .snakemake/conda -maxdepth 1 -type d -print || true
+
+          echo
+          echo "===== Conda Environment Package Versions ====="
+          for env in .snakemake/conda/*; do
+            if [ -d "$env" ]; then
+              echo "--- ENV: $env ---"
+              conda list --prefix "$env" || true
+            fi
+          done
