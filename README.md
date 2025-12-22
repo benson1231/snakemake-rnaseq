@@ -11,14 +11,13 @@
 
 ## Usage
 
-Run the test pipeline with testing config:
+Download the reference files(requires approximately 3GB of disk space):
 
 ```
+# Download reference(hg38 release113)
 ./init.sh
-
-conda deactivate
-conda env remove -n r-gtf
 ```
+Run the test pipeline with testing config:
 
 ```bash
 # run the workflow
