@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0](https://github.com/benson1231/snakemake-rnaseq/compare/v1.1.0...v1.2.0) (2025-12-22)
+
+
+### Features
+
+* add web page ([400c548](https://github.com/benson1231/snakemake-rnaseq/commit/400c548b5cb83227ef5b4fb63031201a73f4af26))
+* fix the route ([21dca69](https://github.com/benson1231/snakemake-rnaseq/commit/21dca69f1d44cac7690eeec9622d6c5bc72d4da0))
+* separate job ([802808e](https://github.com/benson1231/snakemake-rnaseq/commit/802808ec7fef513b3be33bdfe436bb352ab8e0b1))
+
 ## [1.1.0](https://github.com/benson1231/snakemake-rnaseq/compare/v1.0.8...v1.1.0) (2025-12-21)
 
 
