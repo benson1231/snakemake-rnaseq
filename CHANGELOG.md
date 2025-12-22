@@ -1,12 +1,5 @@
 # Changelog
 
-## [1.3.0](https://github.com/benson1231/snakemake-rnaseq/compare/v1.2.0...v1.3.0) (2025-12-22)
-
-
-### Features
-
-* fix the typo ([1eb855d](https://github.com/benson1231/snakemake-rnaseq/commit/1eb855d11df8fab925c30bcd865f607a76008d05))
-
 ## [1.2.0](https://github.com/benson1231/snakemake-rnaseq/compare/v1.1.0...v1.2.0) (2025-12-22)
 
 
@@ -111,4 +104,5 @@
 ### Features
 
 * allow overriding configuration parameters via CLI `--config`
+
 * release full pipeline version with integrated CI and bundled test data for reproducibility
