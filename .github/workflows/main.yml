@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -12,11 +13,15 @@ permissions:
   id-token: write
 
 jobs:
-  test:
+
+  # ============================================================
+  # 🧬 JOB 1 — Run Snakemake Pipeline and Upload Artifacts
+  # ============================================================
+  snakemake_job:
     runs-on: ubuntu-latest
     container:
       image: benson1231/bioc-rnaseq:v2
-    
+
     steps:
       - name: Prepare GOSemSim cache directory
         run: mkdir -p ~/.local/share/GOSemSim
@@ -32,17 +37,15 @@ jobs:
       - name: Snakemake dry-run
         run: |
           cd workflow
-          snakemake -np \
-            --configfile ../.test/config/config.yaml
+          snakemake -np --configfile ../.test/config/config.yaml
 
       - name: Run Snakemake with test data
         run: |
           cd workflow
-          snakemake --cores 4 \
-            --use-conda --show-failed-logs \
+          snakemake --cores 4 --use-conda --show-failed-logs \
             --configfile ../.test/config/config.yaml
 
-      - name: Upload MultiQC and Results artifacts
+      - name: Upload RNA-seq results artifacts
         uses: actions/upload-artifact@v4
         with:
           name: rnaseq-results
@@ -51,14 +54,29 @@ jobs:
             workflow/results/05_results
             workflow/results/05_results/images.js
 
-      - name: Copy results into web/public
-        run: |
-          mkdir -p web/public
-          cp -r workflow/results/04_multiqc_reports web/public/
-          cp -r workflow/results/05_results web/public/
-          cp workflow/results/05_results/images.js web/src/assets/images.js
+  # ============================================================
+  # 🌐 JOB 2 — Build Vite Web App and Deploy to GitHub Pages
+  # ============================================================
+  web_job:
+    runs-on: ubuntu-latest
+    needs: snakemake_job       # 🔥 必須等待 Snakemake job 完成
 
-      - name: Build Vite web app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download results artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: rnaseq-results
+          path: web/public
+
+      - name: Copy images.js into web/src/assets
+        run: |
+          mkdir -p web/src/assets
+          cp web/public/05_results/images.js web/src/assets/images.js
+
+      - name: Build Vite web app using Docker
         run: |
           docker run --rm \
             -v ${{ github.workspace }}/web:/app \
@@ -71,16 +89,17 @@ jobs:
         with:
           path: web/dist
 
+  # ============================================================
+  # 🚀 JOB 3 — Deploy to GitHub Pages
+  # ============================================================
   deploy:
     runs-on: ubuntu-latest
-    needs: test
-    permissions:
-      pages: write
-      id-token: write
+    needs: web_job
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
